@@ -1,0 +1,32 @@
+{
+  "entity": "user",
+  "rules": [
+    {
+      "field": "name",
+      "type": "not-blank",
+      "message": "Name is required"
+    },
+    {
+      "field": "email",
+      "type": "not-blank",
+      "message": "Email is required"
+    },
+    {
+      "field": "email",
+      "type": "regex",
+      "pattern": "^[\\w.-]+@[\\w.-]+\\.\\w+$",
+      "message": "Invalid email format"
+    },
+    {
+      "field": "password",
+      "type": "not-blank",
+      "message": "Password is required"
+    },
+    {
+      "field": "password",
+      "type": "regex",
+      "pattern": "^.{8,}$",
+      "message": "Password must be at least 8 characters long"
+    }
+  ]
+}

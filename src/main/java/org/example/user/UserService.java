@@ -1,5 +1,7 @@
 package org.example.user;
 
+import org.example.validation.ValidationEngine;
+import org.example.validation.ValidationException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,8 +12,11 @@ import java.util.Optional;
 public class UserService {
 
     private final List<User> users = new ArrayList<>();
+    private final ValidationEngine validationEngine;
 
-    public UserService() {
+    public UserService(ValidationEngine validationEngine) {
+        this.validationEngine = validationEngine;
+
         users.add(new User(1L, "Milos", "milos@example.com", "password123"));
         users.add(new User(2L, "Nikola", "nikola@example.com", "password456"));
     }
@@ -27,6 +32,13 @@ public class UserService {
     }
 
     public User createUser(User user) {
+
+        List<String> validationErrors = validationEngine.validate(user);
+
+        if (!validationErrors.isEmpty()) {
+            throw new ValidationException(validationErrors);
+        }
+
         users.add(user);
         return user;
     }

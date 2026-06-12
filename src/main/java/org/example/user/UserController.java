@@ -1,5 +1,6 @@
 package org.example.user;
 
+import org.example.validation.ValidationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +29,14 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public ResponseEntity<?> createUser(@RequestBody User user) {
+
+        try {
+            User createdUser = userService.createUser(user);
+            return ResponseEntity.status(201).body(createdUser);
+        } catch (ValidationException exception) {
+            return ResponseEntity.badRequest().body(exception.getErrors());
+        }
     }
 
     @PutMapping("/{id}")
