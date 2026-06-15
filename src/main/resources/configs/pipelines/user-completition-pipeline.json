@@ -1,0 +1,8 @@
+{
+  "name": "user-completion",
+  "steps": [
+    { "type": "VALIDATE" },
+    { "type": "NOTIFY" },
+    { "type": "MARK_COMPLETE" }
+  ]
+}

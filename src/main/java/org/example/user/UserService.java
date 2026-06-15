@@ -31,6 +31,28 @@ public class UserService {
                 .findFirst();
     }
 
+    public Long getNextId() {
+        return users.stream()
+                .map(User::getId)
+                .max(Long::compareTo)
+                .orElse(0L) + 1;
+    }
+
+    public void save(User user) {
+        Optional<User> existingUserOptional = getUserById(user.getId());
+
+        if (existingUserOptional.isPresent()) {
+            User existingUser = existingUserOptional.get();
+            existingUser.setName(user.getName());
+            existingUser.setEmail(user.getEmail());
+            existingUser.setPassword(user.getPassword());
+            existingUser.setStatus(user.getStatus());
+            return;
+        }
+
+        users.add(user);
+    }
+
     public User createUser(User user) {
 
         List<String> validationErrors = validationEngine.validate(user);
@@ -55,6 +77,7 @@ public class UserService {
         existingUser.setName(updatedUser.getName());
         existingUser.setEmail(updatedUser.getEmail());
         existingUser.setPassword(updatedUser.getPassword());
+        existingUser.setStatus(updatedUser.getStatus());
 
         return Optional.of(existingUser);
     }

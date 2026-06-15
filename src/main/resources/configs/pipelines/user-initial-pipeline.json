@@ -1,0 +1,8 @@
+{
+  "name": "user-initial",
+  "steps": [
+    { "type": "GENERATE_ID" },
+    { "type": "SET_DEFAULTS" },
+    { "type": "SAVE" }
+  ]
+}
